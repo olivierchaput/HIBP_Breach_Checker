@@ -4,12 +4,16 @@
 import sys
 import os.path
 import requests
+import config
 
 
 def validate_Email_File() :
     print("TEST")
 
 def main():
+
+    apiKey = config.api_key
+
     if len(sys.argv) != 2 :
         print("ERROR : Enter text file containing usernames as an argument")
         sys.exit()
