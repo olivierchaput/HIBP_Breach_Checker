@@ -44,11 +44,12 @@ def HIBP_get_all_breaches_for_account(accountToTest):
         print(colors.GREEN + "No breach found for : " + accountToTest.strip() + colors.ENDC)
         print("\n")
 
-def main(): 
+def validate_supplied_arguments():
     if len(sys.argv) != 2 :
         print("ERROR : Enter text file containing usernames as an argument")
         sys.exit()
-
+    
+def read_email_file_contents() :
     emailListFile = sys.argv[1]
     with open(emailListFile, 'r') as f:
         amountOfEmailsToSearch = sum(1 for line in open(emailListFile) if line.rstrip())
@@ -58,10 +59,15 @@ def main():
         print(f.read())
         print("------------------------------------------")
         f.seek(0, 0)
-        accounts = f.readlines()
-    
-    for account in accounts:
-        HIBP_get_all_breaches_for_account(account)
-        time.sleep(1.6)
+        return f.readlines()
+
+def main(): 
+
+    validate_supplied_arguments()
+    emailArray = read_email_file_contents()
+
+    for email in emailArray:
+        HIBP_get_all_breaches_for_account(email)
+        time.sleep(1.55)
 
 main()

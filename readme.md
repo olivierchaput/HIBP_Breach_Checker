@@ -16,4 +16,6 @@ Step 2)
   When prompted, paste API key from HIBP
   
  
- **** If you write down the wrong API key, you have to manually adjust it in the config.py file
+**** 
+- If you write down the wrong API key, you have to manually adjust it in the config.py file
+- Unfortunately rate limiting on the API is throttled to 1 call each 1.5 seconds
