@@ -60,6 +60,7 @@ def read_email_file_contents() :
     emailListFile = sys.argv[1]
     with open(emailListFile, 'r') as f:
         amountOfEmailsToSearch = sum(1 for line in open(emailListFile) if line.rstrip())
+        print("\n")
         print("------------------------------------------")
         print("Commencing search on these {} emails : ".format(amountOfEmailsToSearch))
         print("------------------------------------------")
