@@ -15,7 +15,7 @@ class colors:
     YELLOW = '\033[33m'
     BLUE = '\033[34m'
 
-def haveibeenpwned_request(accountToTest):
+def HIBP_get_all_breaches_for_account(accountToTest):
     url = "https://haveibeenpwned.com/api/v3/breachedaccount/" + urllib.parse.quote_plus(accountToTest.strip())
     hibp_api_key = config.api_key
     payload={}
@@ -52,7 +52,7 @@ def main():
         accounts = f.readlines()
     
     for account in accounts:
-        haveibeenpwned_request(account)
+        HIBP_get_all_breaches_for_account(account)
         time.sleep(1.6)
 
 main()
