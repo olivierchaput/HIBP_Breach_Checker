@@ -5,15 +5,30 @@ import sys
 import os.path
 import requests
 import config
+import urllib.parse
 
 
-def validate_Email_File() :
-    print("TEST")
 
-def main():
+def haveibeenpwned_request(accountToTest):
+    url = "https://haveibeenpwned.com/api/v3/breachedaccount/" + urllib.parse.quote_plus(accountToTest.strip())
+    hibp_api_key = config.api_key
+    payload={}
+    headers = {
+    'hibp-api-key': str(hibp_api_key),
+    'format': 'application/json',
+    'timeout': '2.5',
+    'HIBP': str(hibp_api_key),
+    }
 
-    apiKey = config.api_key
+    response = requests.request("GET", url, headers=headers, data=payload)
+    if(response.text):
+        print("Breachs found for : " + accountToTest.strip())
+        print(response.text)
+    else:
+        print("No breach found for : " + accountToTest.strip())
+        print("\n")
 
+def main(): 
     if len(sys.argv) != 2 :
         print("ERROR : Enter text file containing usernames as an argument")
         sys.exit()
@@ -27,12 +42,9 @@ def main():
         print(f.read())
         print("------------------------------------------")
         f.seek(0, 0)
-        accountToTest = f.readline()
-        requestURL = "https://haveibeenpwned.com/api/v2/breachedaccount/"
-        requestStringWithAccount = requestURL + accountToTest
-
-        response =requests.get(requestStringWithAccount)
-        print(response)
-
+        accounts = f.readlines()
+    
+    for account in accounts:
+        haveibeenpwned_request(account)
 
 main()

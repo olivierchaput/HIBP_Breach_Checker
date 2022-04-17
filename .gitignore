@@ -152,3 +152,4 @@ cython_debug/
 #.idea/
 
 config.py
+real_email_file.txt
