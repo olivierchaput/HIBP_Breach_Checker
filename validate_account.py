@@ -5,6 +5,7 @@ import sys
 import os.path
 import requests
 import time
+import json
 import urllib.parse
 
 #Custom modules
@@ -24,6 +25,10 @@ class colors:
     YELLOW = '\033[33m'
     BLUE = '\033[34m'
 
+def get_pretty_json_string(value_dict):
+    return json.dumps(value_dict, indent=4, sort_keys=True, ensure_ascii=False)
+
+
 def HIBP_get_all_breaches_for_account(accountToTest):
     url = "https://haveibeenpwned.com/api/v3/breachedaccount/" + urllib.parse.quote_plus(accountToTest.strip())
     hibp_api_key = config.api_key
@@ -37,8 +42,10 @@ def HIBP_get_all_breaches_for_account(accountToTest):
 
     response = requests.request("GET", url, headers=headers, data=payload)
     if(response.text):
-        print(colors.RED + "Breachs found for : " + accountToTest.strip() + colors.ENDC)
-        print(response.text)
+        jsonResponse = response.json()
+        print(colors.RED + str(len(jsonResponse)) + " breachs found for : " + accountToTest.strip() + colors.ENDC)
+        for item in jsonResponse:
+            print(item["Name"])
         print("\n")
     else:
         print(colors.GREEN + "No breach found for : " + accountToTest.strip() + colors.ENDC)
