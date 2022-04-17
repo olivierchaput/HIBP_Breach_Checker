@@ -4,9 +4,18 @@
 import sys
 import os.path
 import requests
-import config
 import time
 import urllib.parse
+
+#Custom modules
+try:
+    import config
+except : 
+    val = input("Enter API Key : ")
+    with open('config.py', 'w') as f:
+        f.writelines("api_key = \"" + val + "\"")
+    import config
+
 
 class colors: 
     RED = '\033[31m'
