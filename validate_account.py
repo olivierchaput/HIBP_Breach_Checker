@@ -5,9 +5,15 @@ import sys
 import os.path
 import requests
 import config
+import time
 import urllib.parse
 
-
+class colors: 
+    RED = '\033[31m'
+    ENDC = '\033[m'
+    GREEN = '\033[32m'
+    YELLOW = '\033[33m'
+    BLUE = '\033[34m'
 
 def haveibeenpwned_request(accountToTest):
     url = "https://haveibeenpwned.com/api/v3/breachedaccount/" + urllib.parse.quote_plus(accountToTest.strip())
@@ -22,10 +28,11 @@ def haveibeenpwned_request(accountToTest):
 
     response = requests.request("GET", url, headers=headers, data=payload)
     if(response.text):
-        print("Breachs found for : " + accountToTest.strip())
+        print(colors.RED + "Breachs found for : " + accountToTest.strip() + colors.ENDC)
         print(response.text)
+        print("\n")
     else:
-        print("No breach found for : " + accountToTest.strip())
+        print(colors.GREEN + "No breach found for : " + accountToTest.strip() + colors.ENDC)
         print("\n")
 
 def main(): 
@@ -46,5 +53,6 @@ def main():
     
     for account in accounts:
         haveibeenpwned_request(account)
+        time.sleep(1.6)
 
 main()
